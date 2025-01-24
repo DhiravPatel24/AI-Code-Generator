@@ -7,12 +7,11 @@ import Prompt from '@/data/Prompt'
 import { SandpackCodeEditor, SandpackFileExplorer, SandpackLayout, SandpackPreview, SandpackProvider } from '@codesandbox/sandpack-react'
 import axios from 'axios'
 import { useConvex, useMutation } from 'convex/react'
-import { Loader2Icon } from 'lucide-react'
+import { Loader2Icon } from 'lucide-react'  
 import { useParams } from 'next/navigation'
 import React, { useContext, useEffect, useState } from 'react'
 
 const CodeView = () => {
-  const {userDetail, setUserDetail} = useContext(UserDetailContext)
   const {id} = useParams()
   const [activeTab, setActiveTab]=useState('code')
   const [files, setFiles]=useState(Lookup?.DEFAULT_FILE)
@@ -50,7 +49,7 @@ const CodeView = () => {
         const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
         console.log("Sending prompt:", PROMPT);
         
-        const result = await axios.post('/api/gen-ai-code', { prompt: PROMPT });
+        const result = await axios.post('/api/gen-ai-code', { prompt: PROMPT }, { timeout: 60000 });
         console.log("Response:", result.data);
     
         const aiResp = result.data;
