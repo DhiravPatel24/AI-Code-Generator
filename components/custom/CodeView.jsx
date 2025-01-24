@@ -44,25 +44,31 @@ const CodeView = () => {
       }
     },[messages])
 
-  const GenerateAiCode=async()=>{
-    setLoading(true)
-    const PROMPT= JSON.stringify(messages)+" "+Prompt.CODE_GEN_PROMPT
-    const result = await axios.post('/api/gen-ai-code',{
-      prompt:PROMPT
-    })
-    console.log("response",result.data)
-    const aiResp = result.data
-
-    const mergedFiles = {...Lookup.DEFAULT_FILE,...aiResp?.files}
-    setFiles(mergedFiles)
-    await UpdateFiles({
-      workspaceId:id,
-      files:aiResp?.files
-    })
-  
-    setLoading(false)
-  }
-
+    const GenerateAiCode = async () => {
+      setLoading(true);
+      try {
+        const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
+        console.log("Sending prompt:", PROMPT);
+        
+        const result = await axios.post('/api/gen-ai-code', { prompt: PROMPT });
+        console.log("Response:", result.data);
+    
+        const aiResp = result.data;
+        const mergedFiles = { ...Lookup.DEFAULT_FILE, ...aiResp?.files };
+        setFiles(mergedFiles);
+    
+        await UpdateFiles({
+          workspaceId: id,
+          files: aiResp?.files,
+        });
+      } catch (error) {
+        console.error("Error generating AI code:", error.message, error.response?.data);
+        alert("Failed to generate AI code. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    
   return (
     <div className='relative'>
       <div className='bg-[#181818] w-full p-2 border'>
