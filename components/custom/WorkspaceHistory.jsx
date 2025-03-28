@@ -22,7 +22,6 @@ const WorkspaceHistory = () => {
             userId:userDetail?._id
         })
         setWorkspaceList(result)
-        console.log(result)
     }
 
   return (

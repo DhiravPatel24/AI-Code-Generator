@@ -38,7 +38,6 @@ const ChatView = () => {
       workspaceId: id,
     });
     setMessages(result?.messages);
-    console.log(result);
   };
 
   useEffect(()=>{

@@ -41,13 +41,12 @@ const CodeView = () => {
           GenerateAiCode();
         }
       }
-    },[messages])
+  },[messages])
 
     const GenerateAiCode = async () => {
       setLoading(true);
       try {
         const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
-        console.log("Sending prompt:", PROMPT);
         
         const result = await axios.post('/api/gen-ai-code', { prompt: PROMPT }, { timeout: 60000 });
         console.log("Response:", result.data);

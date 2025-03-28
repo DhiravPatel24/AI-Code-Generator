@@ -26,7 +26,6 @@ const Provider = ({children}) => {
         email:user?.email
       })
       setUserDetail(result)
-      console.log(result)
     }
   }
 

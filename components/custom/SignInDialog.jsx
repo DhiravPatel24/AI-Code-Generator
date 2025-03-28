@@ -40,6 +40,7 @@ const SignInDialog = ({ openDialog, closeDialog }) => {
       }
       setUserDetail(userInfo?.data);
       closeDialog(false);
+      window.location.reload(); 
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
@@ -50,7 +51,6 @@ const SignInDialog = ({ openDialog, closeDialog }) => {
         <DialogHeader>
           <DialogTitle></DialogTitle>
           <DialogDescription>
-            {/* Description text directly within DialogDescription */}
             <span>{Lookup.SIGNIN_SUBHEADING}</span>
           </DialogDescription>
           <div className="flex flex-col justify-center items-center gap-3">
